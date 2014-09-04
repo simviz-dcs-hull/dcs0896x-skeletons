@@ -23,6 +23,7 @@ LIST(APPEND SRC "string.cpp")
 LIST(APPEND SRC "thread.cpp")
 LIST(APPEND SRC "trace.cpp")
 LIST(APPEND SRC "type_info.cpp")
+LIST(APPEND SRC "window.cpp")
 
 LIBRARY_SETUP(${LIB} SOURCES ${SRC} DEPENDENCIES ${Boost_LIBRARIES})
 
