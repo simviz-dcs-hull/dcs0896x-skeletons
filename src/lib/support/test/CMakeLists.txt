@@ -6,15 +6,25 @@
 #                                                                                                  #
 ####################################################################################################
 
-IF(DCS0896X_BLD_UTEST)
-  ADD_CUSTOM_TARGET(test_all)
-  SET_PROPERTY(TARGET test_all PROPERTY FOLDER "Tests")
+MESSAGE(STATUS "Setting up: ${CMAKE_CURRENT_SOURCE_DIR}")
+
+FIND_PACKAGE(Boost ${BOOST_MINIMUM_VERSION} REQUIRED COMPONENTS unit_test_framework)
+
+SET(SRC)
+LIST(APPEND SRC "application.cpp")
+LIST(APPEND SRC "chrono.cpp")
+LIST(APPEND SRC "printable.cpp")
+LIST(APPEND SRC "refcounted.cpp")
+LIST(APPEND SRC "thread.cpp")
+LIST(APPEND SRC "trace.cpp")
+LIST(APPEND SRC "type_info.cpp")
+
+SET(LIBS)
+LIST(APPEND LIBS ${LIB})
+LIST(APPEND LIBS ${Boost_LIBRARIES})
+
+IF(UNIX)
+  LIST(APPEND LIBS rt)
 ENDIF()
 
-IF(DCS0896X_BLD_UTEST)
-  ADD_CUSTOM_TARGET(test_libs)
-  SET_PROPERTY(TARGET test_libs PROPERTY FOLDER "Tests")
-  ADD_DEPENDENCIES(test_all test_libs)
-ENDIF()
-
-ADD_SUBDIRECTORY(lib)
+TEST_SETUP(${LIB} SOURCES ${SRC} DEPENDENCIES ${LIBS})

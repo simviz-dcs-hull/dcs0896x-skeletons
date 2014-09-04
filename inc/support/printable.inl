@@ -6,40 +6,41 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/printable.inl                                                           */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
+#if !defined(UKACHULLDCS_0896X_SUPPORT_PRINTABLE_INL)
 
-#define UKACHULLDCS_0896X_PROTO_INL
+#define UKACHULLDCS_0896X_SUPPORT_PRINTABLE_INL
 
 // includes, system
 
-#include <>
+#include <ostream> // std::basic_ostream<>
 
 // includes, project
 
-#include <>
+// #include <>
 
-#define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
-#include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
-
-namespace ??? {
+namespace support {
   
   // functions, inlined (inline)
+
+  template <typename CTy, typename CTr>
+  inline std::basic_ostream<CTy,CTr>&
+  operator<<(std::basic_ostream<CTy,CTr>& os, printable const& a)
+  {
+    typename std::basic_ostream<CTy,CTr>::sentry const cerberus(os);
+    
+    if (cerberus) {
+      a.print_on(os);
+    }
+    
+    return os;
+  }
   
-} // namespace ??? {
-
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
-#endif
-
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+} // namespace support {
+  
+#endif // #if !defined(UKACHULLDCS_0896X_SUPPORT_PRINTABLE_INL)

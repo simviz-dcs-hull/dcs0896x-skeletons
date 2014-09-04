@@ -6,40 +6,70 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/string.cpp                                                              */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
+// include i/f header
 
-#define UKACHULLDCS_0896X_PROTO_INL
+#include "support/thread.hpp"
 
 // includes, system
 
-#include <>
+#define GLIBCXX_NO_CODECVT 20140624
+
+#if !defined(__GLIBCXX__) || (defined(__GLIBCXX__) && (__GLIBCXX__ > GLIBCXX_NO_CODECVT))
+#  include <codecvt> // std::codecvt_utf8<>
+#endif
+
+#include <locale>    // std::wstring_convert<>
 
 // includes, project
 
-#include <>
+// #include <>
 
 #define UKACHULLDCS_USE_TRACE
 #undef UKACHULLDCS_USE_TRACE
 #include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
 
-namespace ??? {
-  
-  // functions, inlined (inline)
-  
-} // namespace ??? {
+// internal unnamed namespace
 
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
+namespace {
+  
+  // types, internal (class, enum, struct, union, typedef)
+  
+  // variables, internal
+  
+  // functions, internal
+
+} // namespace {
+
+namespace support {
+  
+  // variables, exported
+  
+  // functions, exported
+
+  std::string
+  wstring_to_string(std::wstring const& a)
+  {
+    TRACE("support::wstring_to_string");
+
+#if defined(__GLIBCXX__) && (__GLIBCXX__ <= GLIBCXX_NO_CODECVT)
+    return std::string(a.begin(), a.end());
+#else
+    return std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(a);
 #endif
-
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+  }
+  
+  std::wstring
+  string_to_wstring(std::string const& a)
+  {
+    TRACE("support::string_to_wstring");
+    
+    return std::wstring(a.begin(), a.end());
+  }
+  
+} // namespace support {

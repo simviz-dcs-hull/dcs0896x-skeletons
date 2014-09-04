@@ -15,6 +15,9 @@ OPTION(DCS0896X_BLD_UTEST "Enable unit-test building by default"                
 OPTION(DCS0896X_RUN_CTEST "Enable unit-test execution using CTest by default"             ON)
 OPTION(DCS0896X_RUN_UTEST "Enable unit-test execution using the build system by default" OFF)
 
+# tracing
+OPTION(DCS0896X_TRACE_ALL "Enable runtime function tracing for everything!" OFF)
+
 # gcc/clang specific options
 IF(${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
   OPTION(DCS0896X_ADDR_SANITATION  "Enable gcc/clang address sanitation" OFF)

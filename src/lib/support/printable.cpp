@@ -6,40 +6,72 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/printable.cpp                                                           */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
+// include i/f header
 
-#define UKACHULLDCS_0896X_PROTO_INL
+#include "support/printable.hpp"
 
 // includes, system
 
-#include <>
+#include <ostream>   // std::ostream
+#include <sstream>   // std::ostringstream
+#include <stdexcept> // std::logic_error
 
 // includes, project
 
-#include <>
+#include <support/string.hpp>
 
 #define UKACHULLDCS_USE_TRACE
 #undef UKACHULLDCS_USE_TRACE
 #include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
 
-namespace ??? {
+// internal unnamed namespace
+
+namespace {
   
-  // functions, inlined (inline)
+  // types, internal (class, enum, struct, union, typedef)
+
+  // variables, internal
   
-} // namespace ??? {
+  // functions, internal
 
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
-#endif
+} // namespace {
 
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+namespace support {
+  
+  // variables, exported
+  
+  // functions, exported
+
+  /* virtual */
+  printable::~printable()
+  {
+    TRACE("support::printable::~printable");
+  }
+  
+  /* virtual */ void
+  printable::print_on(std::ostream&) const
+  {
+    TRACE_NEVER("support::printable::print_on(std::ostream)");
+
+    throw std::logic_error("pure virtual function 'support::printable::print_on' called");
+  }
+
+  /* virtual */ void
+  printable::print_on(std::wostream& wos) const
+  {
+    TRACE_NEVER("support::printable::print_on(std::wostream)");
+
+    std::ostringstream ostr;
+    
+    print_on(ostr);
+
+    wos << string_to_wstring(ostr.str());
+  }
+  
+} // namespace support {

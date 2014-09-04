@@ -6,40 +6,37 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/string.hpp                                                              */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
+#if !defined(UKACHULLDCS_0896X_SUPPORT_STRING_HPP)
 
-#define UKACHULLDCS_0896X_PROTO_INL
+#define UKACHULLDCS_0896X_SUPPORT_STRING_HPP
 
 // includes, system
 
-#include <>
+#include <string> // std::string, std::wstring
 
 // includes, project
 
-#include <>
+// #include <>
 
-#define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
-#include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
-
-namespace ??? {
+namespace support {
   
+  // types, exported (class, enum, struct, union, typedef)
+  
+  // variables, exported (extern)
+
   // functions, inlined (inline)
   
-} // namespace ??? {
+  // functions, exported (extern)
 
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
-#endif
+  std::wstring string_to_wstring(std::string  const&);
+  std::string  wstring_to_string(std::wstring const&);
+  
+} // namespace support {
 
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+#endif // #if !defined(UKACHULLDCS_0896X_SUPPORT_STRING_HPP)

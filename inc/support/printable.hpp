@@ -6,40 +6,50 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/printable.hpp                                                           */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
+#if !defined(UKACHULLDCS_0896X_SUPPORT_PRINTABLE_HPP)
 
-#define UKACHULLDCS_0896X_PROTO_INL
+#define UKACHULLDCS_0896X_SUPPORT_PRINTABLE_HPP
 
 // includes, system
 
-#include <>
+#include <iosfwd> // std::basic_ostream<> (fwd)
 
 // includes, project
 
-#include <>
+// #include <>
 
-#define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
-#include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
+namespace support {
 
-namespace ??? {
-  
+  // types, exported (class, enum, struct, union, typedef)
+
+  class printable {
+
+  public:
+
+    virtual ~printable();
+    
+    virtual void print_on(std::ostream&)  const =0;
+    virtual void print_on(std::wostream&) const;
+    
+  };
+
+  // variables, exported (extern)
+
   // functions, inlined (inline)
-  
-} // namespace ??? {
 
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
-#endif
+  // functions, exported (extern)
 
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+  template <typename CTy, typename CTr>
+  std::basic_ostream<CTy,CTr>& operator<<(std::basic_ostream<CTy,CTr>&, printable const&);
+
+} // namespace support {
+
+#include <support/printable.inl>
+
+#endif // #if !defined(UKACHULLDCS_0896X_SUPPORT_PRINTABLE_HPP)

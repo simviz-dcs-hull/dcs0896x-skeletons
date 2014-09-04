@@ -6,40 +6,57 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  proto.inl                                                                       */
+/*  module     :  support/test/thread.cpp                                                         */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_PROTO_INL)
-
-#define UKACHULLDCS_0896X_PROTO_INL
-
 // includes, system
 
-#include <>
+#include <iostream> // std::cout
 
 // includes, project
 
-#include <>
+#include <support/thread.hpp>
 
-#define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
-#include <support/trace.hpp>
-//#if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
-//#  include <typeinfo>
-//#  include <support/type_info.hpp>
-//#endif
+// internal unnamed namespace
 
-namespace ??? {
+namespace {
   
-  // functions, inlined (inline)
+  // types, internal (class, enum, struct, union, typedef)
+
+  // variables, internal
   
-} // namespace ??? {
+  // functions, internal
 
-#if defined(UKACHULLDCS_USE_TRACE)
-#  undef UKACHULLDCS_USE_TRACE
-#endif
+} // namespace {
 
-#endif // #if !defined(UKACHULLDCS_0896X_PROTO_INL)
+// functions, exported
+
+#define BOOST_TEST_MAIN
+#include <boost/test/unit_test.hpp>
+
+BOOST_AUTO_TEST_CASE(test_support_stats)
+{
+  using namespace support;
+
+  clock::duration const sleep_time(std::chrono::milliseconds(50));
+  clock::duration       lapse;
+  timer const           t;
+  
+  for (unsigned i(0); i < 20; ++i) {
+    clock::duration const start(t.lapse());
+    {
+      sleep(( 9 * sleep_time) / 10);
+      lapse = t.lapse();
+      sleep((11 * sleep_time) / 10);
+    }
+    clock::duration const stop(t.lapse());
+    
+    dump_thread_stats(std::cout, "support::dump_thread_stats",
+                      stop - start, lapse - start, false, 4);
+
+    sleep(sleep_time / 100);
+  }
+}
