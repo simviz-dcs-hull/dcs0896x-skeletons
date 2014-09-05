@@ -18,11 +18,11 @@
 
 // includes, system
 
-#include <windows.h> // win32 stuff
+//#include <>
 
 // includes, project
 
-// #include <>
+#include <win/window/manager.hpp>
 
 #define UKACHULLDCS_USE_TRACE
 #undef UKACHULLDCS_USE_TRACE
@@ -61,7 +61,7 @@ namespace win {
   {
     TRACE_NEVER("win::application::print_on");
       
-    support::application::print_on(os);
+    support::application::single_instance::print_on(os);
   }
 
   /* explicit */

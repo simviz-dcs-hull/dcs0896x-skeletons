@@ -26,14 +26,14 @@
 
 // includes, project
 
-// #include <>
+#include <win/utilities.hpp>
 
 #define UKACHULLDCS_USE_TRACE
 #undef UKACHULLDCS_USE_TRACE
-#include <win/trace.hpp>
+#include <support/trace.hpp>
 #if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
 #  include <typeinfo>
-#  include <win/type_info.hpp>
+#  include <support/type_info.hpp>
 #endif
 
 namespace win {
@@ -46,7 +46,7 @@ namespace win {
   {
     TRACE("win::application::execute<" + demangle(typeid(T)) + ">");
 
-    signed msg_loop_thr_id = ::GetCurrentThreadId();
+    static signed msg_loop_thr_id(::GetCurrentThreadId());
 
     struct signal_handler {
 
@@ -93,7 +93,7 @@ namespace win {
     signed result(EXIT_FAILURE);
     
     try {
-      result = support::executor<T>(argc, argv).run();
+      result = support::application::executor<T>(argc, argv).run();
     }
 
     catch (std::exception& ex) {

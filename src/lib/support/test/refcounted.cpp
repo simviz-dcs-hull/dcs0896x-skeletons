@@ -119,7 +119,7 @@ BOOST_AUTO_TEST_CASE(test_support_refcounted_intrusive_ptr_0)
   {
     boost::intrusive_ptr<refcounted_test> irct(rct);
 
-    BOOST_CHECK(1 == irct->get_ref());
+    BOOST_CHECK(1 == rct->get_ref());
   }
   BOOST_CHECK(0 == rct->get_ref());
 }

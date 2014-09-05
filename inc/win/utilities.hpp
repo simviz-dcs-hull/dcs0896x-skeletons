@@ -6,23 +6,24 @@
 /*                                                                                                */
 /**************************************************************************************************/
 /*                                                                                                */
-/*  module     :  win/windows.hpp                                                                 */
+/*  module     :  win_utilities.hpp                                                               */
 /*  project    :                                                                                  */
 /*  description:                                                                                  */
 /*                                                                                                */
 /**************************************************************************************************/
 
-#if !defined(UKACHULLDCS_0896X_WIN_WINDOWS_HPP)
+#if !defined(UKACHULLDCS_0896X_WIN_UTILITIES_HPP)
 
-#define UKACHULLDCS_0896X_WIN_WINDOWS_HPP
+#define UKACHULLDCS_0896X_WIN_UTILITIES_HPP
 
 // includes, system
 
-//#include <>
+#include <string>
+#include <windows.h>
 
 // includes, project
 
-#include <win/window/manager.hpp>
+//#include <>
 
 namespace win {
   
@@ -31,9 +32,26 @@ namespace win {
   // variables, exported (extern)
 
   // functions, inlined (inline)
+
+  template <class T> T  window_long (HWND, signed);
+  template <class T> T  window_long (HWND, T, signed);
+
+  template <class T> T* window_long_ptr(HWND, signed);
+  template <class T> T* window_long_ptr(HWND, T*, signed);
+
+  template <class T> T  class_long (HWND, signed);
+  template <class T> T  class_long (HWND, T, signed);
+
+  template <class T> T* class_long_ptr(HWND, signed);
+  template <class T> T* class_long_ptr(HWND, T*, signed);
   
   // functions, exported (extern)
+
+  std::string module_path(HMODULE module);
+  std::string last_error_message();
   
 } // namespace win {
 
-#endif // #if !defined(UKACHULLDCS_0896X_WIN_WINDOWS_HPP)
+#include <win/utilities.inl>
+
+#endif // #if !defined(UKACHULLDCS_0896X_WIN_UTILITIES_HPP)

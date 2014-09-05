@@ -131,14 +131,15 @@ IF(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 
   SET(DISABLED_WARNINGS)
 
+  LIST(APPEND DISABLED_WARNINGS " /wd4512") # assignment operator could not be generated
+  LIST(APPEND DISABLED_WARNINGS " /wd4702") # unreachable code
+
   IF(FALSE)
     LIST(APPEND DISABLED_WARNINGS " /wd4201") # nonstandard extension used : nameless struct/union
     LIST(APPEND DISABLED_WARNINGS " /wd4351") # new behavior: elements of array '*' will be default
                                               # initialized
-    LIST(APPEND DISABLED_WARNINGS " /wd4512") # assignment operator could not be generated
     LIST(APPEND DISABLED_WARNINGS " /wd4519") # default template arguments are only allowed on a
                                               # class template
-    LIST(APPEND DISABLED_WARNINGS " /wd4702") # unreachable code (somewhere in boost)
   ENDIF()
 
   SET(GLOBAL_COMPILER_FLAGS)
