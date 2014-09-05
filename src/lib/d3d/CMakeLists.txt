@@ -6,9 +6,4 @@
 #                                                                                                  #
 ####################################################################################################
 
-IF(WIN32)
-  ADD_SUBDIRECTORY(d3d)
-  ADD_SUBDIRECTORY(win)
-ENDIF()
-
-ADD_SUBDIRECTORY(support)
+MESSAGE(STATUS "Setting up: ${CMAKE_CURRENT_SOURCE_DIR}")

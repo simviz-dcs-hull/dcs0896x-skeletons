@@ -6,9 +6,14 @@
 #                                                                                                  #
 ####################################################################################################
 
-IF(WIN32)
-  ADD_SUBDIRECTORY(d3d)
-  ADD_SUBDIRECTORY(win)
-ENDIF()
+MESSAGE(STATUS "Setting up: ${CMAKE_CURRENT_SOURCE_DIR}")
 
-ADD_SUBDIRECTORY(support)
+SET(LIB "win")
+
+SET(SRC)
+
+LIST(APPEND SRC "application.cpp")
+
+LIBRARY_SETUP(${LIB} SOURCES ${SRC})
+
+ADD_SUBDIRECTORY(test EXCLUDE_FROM_ALL)

@@ -84,7 +84,7 @@ namespace support {
         result = execute<T>(argc, argv);
       }
       
-      catch (std::exception&) { /* ??? */ }
+      catch (std::exception&) { /* sink only */ }
       
       return result;
     }

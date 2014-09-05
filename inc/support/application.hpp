@@ -100,8 +100,21 @@ namespace support {
   
     // functions, exported (extern)
 
+    /**
+     * \brief ...
+     *
+     * \c
+     *
+     * \param  argc
+     * \param  argv
+     * \return EXIT_[FAILURE|SUCCESS]
+     *
+     * \throw  anything
+     */
+    //@{
     template <typename T> signed execute(int, char* []);
     template <typename T> signed execute(int, char* [], std::nothrow_t const&);
+    //@}
     
   } // namespace application {
   
