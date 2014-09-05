@@ -20,6 +20,10 @@
 
 #include <support/application.hpp>
 
+#if defined(_MSC_VER)
+#  pragma warning(disable:4127)
+#endif
+
 // internal unnamed namespace
 
 namespace {
@@ -54,7 +58,7 @@ namespace {
   // variables, internal
 
   int   argc(1);
-  char* argv[] = { "dummy" };
+  char* argv[] = { "dummy\0" };
   
   // functions, internal
 
@@ -120,3 +124,7 @@ BOOST_AUTO_TEST_CASE(test_support_application_execute_single_instance_fail_nothr
   
   BOOST_CHECK(EXIT_SUCCESS != execute<app_single_instance_fail>(argc, argv, std::nothrow));
 }
+
+#if defined(_MSC_VER)
+#  pragma warning(default:4127)
+#endif
