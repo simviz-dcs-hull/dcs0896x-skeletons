@@ -12,7 +12,7 @@ OPTION(DCS0896X_DOC_USR "Enable generation of user documentation"      OFF)
 
 # unit testing
 OPTION(DCS0896X_BLD_UTEST "Enable unit-test building by default"                          ON)
-OPTION(DCS0896X_RUN_CTEST "Enable unit-test execution using CTest by default"            OFF)
+OPTION(DCS0896X_RUN_CTEST "Enable unit-test execution using CTest by default"             ON)
 OPTION(DCS0896X_RUN_UTEST "Enable unit-test execution using the build system by default" OFF)
 
 # tracing
