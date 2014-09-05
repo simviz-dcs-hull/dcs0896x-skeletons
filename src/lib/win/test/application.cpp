@@ -18,6 +18,7 @@
 
 // includes, project
 
+#include <support/chrono.hpp>
 #include <win/application.hpp>
 
 #define UKACHULLDCS_USE_TRACE
@@ -41,21 +42,27 @@ namespace {
     
     explicit app_skeleton(int a, char* b[])
       : T(a, b)
-    {}
-    
-    virtual signed run()
     {
+      use_window_manager_count_ = false;
+    }    
+
+  private:
+
+    virtual void message_wait()
+    {
+      TRACE("win::application::message_wait");
+
       if (B) {
         throw std::runtime_error("run-time error");
       }
       
-      return EXIT_SUCCESS;
+      T::message_wait();
     }
     
   };
   
-  typedef app_skeleton<win::application, false> appsin;
-  typedef app_skeleton<win::application, true>  appsit;
+  typedef app_skeleton<win::application, false>    appsin;
+  typedef app_skeleton<win::application, true>     appsit;
   
   // variables, internal
 

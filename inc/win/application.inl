@@ -18,7 +18,6 @@
 
 // includes, system
 
-#include <csignal>   // getenv, signal, SIG*
 #include <cstddef>   // EXIT_*
 #include <cstdlib>   // EXIT_FAILURE
 #include <stdexcept> // std::exception
@@ -29,7 +28,7 @@
 #include <win/utilities.hpp>
 
 #define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
+//#undef UKACHULLDCS_USE_TRACE
 #include <support/trace.hpp>
 #if defined(UKACHULLDCS_USE_TRACE) || defined(UKACHULLDCS_ALL_TRACE)
 #  include <typeinfo>
@@ -39,53 +38,15 @@
 namespace win {
   
   // functions, inlined (inline)
-
+  
   template <typename T>
   inline signed
   execute(int argc, char* argv[])
   {
-    TRACE("win::application::execute<" + demangle(typeid(T)) + ">");
-
-    static signed msg_loop_thr_id(::GetCurrentThreadId());
-
-    struct signal_handler {
-
-    public:
-
-      static void handle(signed signum)
-      {
-        TRACE("win::application::execute<" + demangle(typeid(T)) +
-              ">::<local>::signal_handler::handle");
-
-        signed exit_code(EXIT_FAILURE);
+    TRACE("win::application::execute<" + support::demangle(typeid(T)) + ">");
     
-        switch (signum) {
-        case SIGINT:
-        case SIGTERM:
-          exit_code = EXIT_SUCCESS;
-          break;
-
-        default:
-          break;
-        }
-
-        if (-1 != msg_loop_thr_id) {
-#if defined(UKACHULLDCS_USE_TRACE)
-          std::cout << support::trace::prefix() << "win::application::execute<"
-                    << demangle(typeid(T)) << ">::<local>::signal_handler::handle: "
-                    << "sending WM_APP/WM_QUIT to thread 0x" << std::hex << msg_loop_thr_id
-                    << std::endl;
-#endif
-          
-          ::PostThreadMessage(msg_loop_thr_id, WM_APP, exit_code, WM_QUIT);
-        }
-      }
-      
-    };
+    T::setup();
     
-    ::signal(SIGINT,  signal_handler::handle);
-    ::signal(SIGTERM, signal_handler::handle);
-  
 #if defined(_DEBUG) || defined(DEBUG)
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
@@ -124,7 +85,7 @@ namespace win {
   inline signed
   execute(int argc, char* argv[], std::nothrow_t const&)
   {
-    TRACE("win::application::execute<" + demangle(typeid(T)) + ">(std::nothrow_t)");
+    TRACE("win::application::execute<" + support::demangle(typeid(T)) + ">(std::nothrow_t)");
       
     signed result(EXIT_FAILURE);
       
@@ -141,6 +102,15 @@ namespace win {
 
 #if defined(UKACHULLDCS_USE_TRACE)
 #  undef UKACHULLDCS_USE_TRACE
+#endif
+
+#pragma comment(linker, "/ENTRY:mainCRTStartup")
+#if defined(_DEBUG) || defined(DEBUG)
+#  pragma comment(linker, "/SUBSYSTEM:console ")
+#  pragma message(__FILE__ ": /SUBSYSTEM:console /ENTRY:mainCRTStartup")
+#else
+#  pragma comment(linker, "/SUBSYSTEM:windows")
+#  pragma message(__FILE__ ": /SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 #endif
 
 #endif // #if !defined(UKACHULLDCS_0896X_WIN_APPLICATION_INL)

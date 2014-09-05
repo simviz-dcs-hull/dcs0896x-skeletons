@@ -18,14 +18,14 @@
 
 // includes, system
 
-//#include <>
+#include <csignal> // signal, SIG*
 
 // includes, project
 
 #include <win/window/manager.hpp>
 
 #define UKACHULLDCS_USE_TRACE
-#undef UKACHULLDCS_USE_TRACE
+//#undef UKACHULLDCS_USE_TRACE
 #include <support/trace.hpp>
 
 // internal unnamed namespace
@@ -121,6 +121,51 @@ namespace win {
     }
 
     return signed(msg.wParam);
+  }
+
+  namespace {
+
+    signed msg_loop_thr_id(-1);
+    
+    void
+    signal_handler(signed signum)
+    {
+      TRACE("win::<unnamed>::signal_handler");
+    
+      signed exit_code(EXIT_FAILURE);
+    
+      switch (signum) {
+      case SIGINT:
+      case SIGTERM:
+        exit_code = EXIT_SUCCESS;
+        break;
+      
+      default:
+        break;
+      }
+    
+      if (-1 != msg_loop_thr_id) {
+#if defined(UKACHULLDCS_USE_TRACE)
+        std::cout << support::trace::prefix() << "win::signal_handler::handler: "
+                  << "sending WM_APP/WM_QUIT to thread 0x" << std::hex << msg_loop_thr_id
+                  << std::endl;
+#endif
+      
+        ::PostThreadMessage(msg_loop_thr_id, WM_APP, exit_code, WM_QUIT);
+      }
+    }
+    
+  }
+  
+  /* static */ void
+  application::setup()
+  {
+    TRACE("win::application::setup");
+    
+    msg_loop_thr_id = ::GetCurrentThreadId();
+    
+    ::signal(SIGINT,  signal_handler);
+    ::signal(SIGTERM, signal_handler);
   }
   
 } // namespace win {

@@ -46,6 +46,12 @@ namespace win {
     virtual void   message_wait();
     virtual signed message_loop();
 
+  private:
+
+    template <typename T> friend signed execute(int, char* []);
+    
+    static void setup();
+    
   };
   
   // variables, exported (extern)
