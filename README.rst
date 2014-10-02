@@ -15,7 +15,7 @@ dcs08961 README
 Introduction
 ============
 
-``dcs0896x-skeltons`` is an infrastructure project to support the ``08960 C++ Programming and Design`` and ``08961 Real-Time Graphics`` modules at the ``Department of Computer Science, University of Hull``.
+``dcs0896x-skeletons`` is an infrastructure project to support the ``08960 C++ Programming and Design`` and ``08961 Real-Time Graphics`` modules at the ``Department of Computer Science, University of Hull``.
 
 Building and Installation
 =========================
@@ -62,4 +62,3 @@ License
 =======
 
 Copyright 2014  University of Hull. Distributed under the LGPLv2.1 (see the accompanying file LICENSE).
-
