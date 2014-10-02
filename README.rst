@@ -25,15 +25,19 @@ Quick Setup
 
 ::
 
+ # clone project
+ $> git clone <project-url-for-cloning>
+ # creates ./<project-dir>
+ 
  # linux
- $> cd <src-dir>
+ $> cd <project-dir>
  $> mkdir build && cd build
  $> cmake ..
  $> make -j4
  $> make -j4 test_all
 
  # windows
- $> cd <src-dir>
+ $> cd <project-dir>
  $> mkdir build && cd build
  $> cmake ..
  $> msbuild.exe DCS08961.sln /nologo /v:q /m:4
